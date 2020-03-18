@@ -7,8 +7,8 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=luci-app-passwall-mini
 PKG_VERSION:=3.6
-PKG_RELEASE:=22
-PKG_DATE:=20200314
+PKG_RELEASE:=25
+PKG_DATE:=20200315
 
 PKG_BUILD_DIR := $(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
 
@@ -16,26 +16,42 @@ include $(INCLUDE_DIR)/package.mk
 
 define Package/$(PKG_NAME)/config
 menu "Configuration"
+
+config PACKAGE_$(PKG_NAME)_INCLUDE_ipt2socks
+	bool "Include ipt2socks"
+	default y
 	
 config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks
 	bool "Include Shadowsocks Redir (ss-redir)"
 	default y
 	
+# config PACKAGE_$(PKG_NAME)_INCLUDE_ShadowsocksR
+# 	bool "Include ShadowsocksR Redir (ssr-redir)"
+# 	default y
+
 config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_socks
 	bool "Include Shadowsocks Socks (ss-local)"
-	default y
+	default n
 	
-config PACKAGE_$(PKG_NAME)_INCLUDE_V2ray
-	bool "Include V2ray"
-	default y
+# config PACKAGE_$(PKG_NAME)_INCLUDE_ShadowsocksR_socks
+# 	bool "Include ShadowsocksR Socks (ssr-local)"
+# 	default n
+	
+# config PACKAGE_$(PKG_NAME)_INCLUDE_V2ray
+# 	bool "Include V2ray"
+# 	default y
 
 config PACKAGE_$(PKG_NAME)_INCLUDE_Trojan
 	bool "Include Trojan"
-	default y
-
-config PACKAGE_$(PKG_NAME)_INCLUDE_ipt2socks
-	bool "Include ipt2socks"
-	default y
+	default n
+	
+# config PACKAGE_$(PKG_NAME)_INCLUDE_Brook
+# 	bool "Include Brook"
+# 	default n
+	
+# config PACKAGE_$(PKG_NAME)_INCLUDE_kcptun
+# 	bool "Include kcptun"
+# 	default n
 
 config PACKAGE_$(PKG_NAME)_INCLUDE_haproxy
 	bool "Include haproxy"
@@ -52,22 +68,6 @@ config PACKAGE_$(PKG_NAME)_INCLUDE_pdnsd
 config PACKAGE_$(PKG_NAME)_INCLUDE_dns2socks
 	bool "Include dns2socks"
 	default y
-
-# config PACKAGE_$(PKG_NAME)_INCLUDE_ShadowsocksR
-# 	bool "Include ShadowsocksR Redir (ssr-redir)"
-# 	default n
-	
-# config PACKAGE_$(PKG_NAME)_INCLUDE_ShadowsocksR_socks
-# 	bool "Include ShadowsocksR Socks (ssr-local)"
-# 	default n
-	
-# config PACKAGE_$(PKG_NAME)_INCLUDE_Brook
-# 	bool "Include Brook"
-# 	default n
-	
-# config PACKAGE_$(PKG_NAME)_INCLUDE_kcptun
-# 	bool "Include kcptun"
-# 	default n
 	
 # config PACKAGE_$(PKG_NAME)_INCLUDE_v2ray-plugin
 # 	bool "Include v2ray-plugin (Shadowsocks plugin)"
@@ -87,10 +87,9 @@ define Package/$(PKG_NAME)
   PKGARCH:=all
   DEPENDS:=+libmbedtls +iptables-mod-tproxy +ip +ipset +coreutils +coreutils-base64 +coreutils-nohup +luci-lib-jsonc \
   +wget +resolveip +unzip +dnsmasq-full +tcping +libuci-lua \
+  +PACKAGE_$(PKG_NAME)_INCLUDE_ipt2socks:ipt2socks \
   +PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks:shadowsocks-libev-ss-redir \
   +PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_socks:shadowsocks-libev-ss-local \
-  +PACKAGE_$(PKG_NAME)_INCLUDE_V2ray:v2ray \
-  +PACKAGE_$(PKG_NAME)_INCLUDE_ipt2socks:ipt2socks \
   +PACKAGE_$(PKG_NAME)_INCLUDE_Trojan:trojan \
   +PACKAGE_$(PKG_NAME)_INCLUDE_Trojan:ipt2socks \
   +PACKAGE_$(PKG_NAME)_INCLUDE_haproxy:haproxy \
