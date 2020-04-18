@@ -7,8 +7,8 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=luci-app-passwall-mini
 PKG_VERSION:=3.6
-PKG_RELEASE:=25
-PKG_DATE:=20200315
+PKG_RELEASE:=40
+PKG_DATE:=20200411
 
 PKG_BUILD_DIR := $(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
 
@@ -23,7 +23,7 @@ config PACKAGE_$(PKG_NAME)_INCLUDE_ipt2socks
 	
 config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks
 	bool "Include Shadowsocks Redir (ss-redir)"
-	default y
+	default n
 	
 # config PACKAGE_$(PKG_NAME)_INCLUDE_ShadowsocksR
 # 	bool "Include ShadowsocksR Redir (ssr-redir)"
@@ -35,15 +35,15 @@ config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_socks
 	
 # config PACKAGE_$(PKG_NAME)_INCLUDE_ShadowsocksR_socks
 # 	bool "Include ShadowsocksR Socks (ssr-local)"
-# 	default n
+# 	default y
 	
 # config PACKAGE_$(PKG_NAME)_INCLUDE_V2ray
 # 	bool "Include V2ray"
 # 	default y
 
-config PACKAGE_$(PKG_NAME)_INCLUDE_Trojan
-	bool "Include Trojan"
-	default n
+# config PACKAGE_$(PKG_NAME)_INCLUDE_Trojan
+# 	bool "Include Trojan"
+# 	default n
 	
 # config PACKAGE_$(PKG_NAME)_INCLUDE_Brook
 # 	bool "Include Brook"
@@ -90,7 +90,6 @@ define Package/$(PKG_NAME)
   +PACKAGE_$(PKG_NAME)_INCLUDE_ipt2socks:ipt2socks \
   +PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks:shadowsocks-libev-ss-redir \
   +PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_socks:shadowsocks-libev-ss-local \
-  +PACKAGE_$(PKG_NAME)_INCLUDE_Trojan:trojan \
   +PACKAGE_$(PKG_NAME)_INCLUDE_Trojan:ipt2socks \
   +PACKAGE_$(PKG_NAME)_INCLUDE_haproxy:haproxy \
   +PACKAGE_$(PKG_NAME)_INCLUDE_ChinaDNS_NG:chinadns-ng \
